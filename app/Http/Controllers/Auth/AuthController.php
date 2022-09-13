@@ -100,7 +100,12 @@ class AuthController extends Controller
     }
 
     public function callback_reset(Request $request){
-        return Response::successResponse($request->token);
+
+        $data =[];
+        $data['token'] = $request->token;
+        $data['email'] = $request->email;
+
+        return Response::successResponse($data);
     }
 
     public function reset_password(Request $request){
