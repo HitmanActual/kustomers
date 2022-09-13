@@ -27,6 +27,6 @@ class SiteSurvey extends Model
     ];
 
     public function getFileAttribute(){
-        return public_path().'\\SiteSurvey\\'.$this->file_path;
+        return ($this->file_path !==null)?asset('files/SiteSurvey/'.$this->file_path):"";
     }
 }

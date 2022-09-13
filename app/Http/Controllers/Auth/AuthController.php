@@ -96,7 +96,7 @@ class AuthController extends Controller
             return Response::successResponse([],$status);
         }
 
-        return Response::errorResponse('status');
+        return Response::errorResponse($status);
     }
 
     public function callback_reset(Request $request){

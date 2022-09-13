@@ -26,7 +26,7 @@ class UtilityBill extends Model
     ];
 
     public function getFileAttribute(){
-        return public_path().'\\UtilityBill\\'.$this->file_path;
+        return ($this->file_path !==null)?asset('files/UtilityBill/'.$this->file_path):"";
     }
 
 
