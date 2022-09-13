@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth:api'],function (){
         Route::post('/upload_file',[\App\Http\Controllers\Api\UtilityBill\UtilityBillController::class,'upload_file']);
     });
 
-    Route::get('/logout', 'Auth\AuthApiController@logout');
+    Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 });
 
 
