@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $url = "http://kustomers.boxbyld.tech/api/callback_reset_password?token=".$token;
+        $url = "https://kustomers.boxbyld.tech/api/callback_reset_password?token=".$token;
         $this->notify(new ResetPasswordNotification($url));
     }
 
