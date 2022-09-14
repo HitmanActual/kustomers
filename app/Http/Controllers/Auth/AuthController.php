@@ -96,6 +96,12 @@ class AuthController extends Controller
             return Response::successResponse([],$status);
         }
 
+        if ($status == Password::RESET_THROTTLED){
+            return Response::errorResponse('reset message is sent to mail');
+        }elseif ($status == Password::INVALID_USER){
+            return Response::errorResponse('this user not found');
+        }
+
         return Response::errorResponse($status);
     }
 
