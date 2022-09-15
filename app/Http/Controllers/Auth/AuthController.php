@@ -107,7 +107,7 @@ class AuthController extends Controller
 
     public function callback_reset(Request $request){
 
-        return redirect()->to('http://localhost:3000/reset-password?token='.$request->token."&email=".$request->email);
+        return redirect()->to('https://www.customer.boxbyld.tech/reset-password?token='.$request->token."&email=".$request->email);
 
     }
 
