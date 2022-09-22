@@ -38,6 +38,25 @@ Route::group(['middleware' => 'auth:api'],function (){
         Route::post('/upload_file',[\App\Http\Controllers\Api\UtilityBill\UtilityBillController::class,'upload_file']);
     });
 
+    Route::group(['prefix' => 'solution'],function (){
+        Route::get('/',[\App\Http\Controllers\Api\Solution\SolutionController::class,'index']);
+    });
+
+    Route::group(['prefix' => 'contract'],function (){
+        Route::get('/',[\App\Http\Controllers\Api\Contract\ContractController::class,'index']);
+    });
+
+    Route::group(['prefix' => 'pm'],function (){
+        Route::get('/pm_users',[\App\Http\Controllers\Api\PM\PMController::class,'getPMUserById']);
+        Route::get('/pm_status',[\App\Http\Controllers\Api\PM\PMController::class,'getPMStatus']);
+    });
+
+    Route::group(['prefix' => 'status_finance'],function (){
+        Route::get('/get_financed',[\App\Http\Controllers\Api\StatusFinance\StatusFinanceController::class,'getFinanced']);
+        Route::get('/get_status_sunlight/{project_id}',[\App\Http\Controllers\Api\StatusFinance\StatusFinanceController::class,'getStatusForSunlight']);
+    });
+
+
     Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 });
 

@@ -12,8 +12,8 @@ trait ConsumesExternalService
         $client = new Client([
             'base_uri' => $this->baseUri,
         ]);
-        $headers['api_key'] = $this->api_key;
-        $response = $client->request($method, "api/v1/" . $requestUrl, ['form_params' => $formParams, 'headers' => $headers]);
+        $headers['token'] = $this->api_key;
+        $response = $client->request($method, "api/" . $requestUrl, ['form_params' => $formParams, 'headers' => $headers]);
         return $response->getBody()->getContents();
     }
 }
