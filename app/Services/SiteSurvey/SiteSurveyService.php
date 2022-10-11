@@ -25,7 +25,8 @@ class SiteSurveyService{
 
     public function upload_file($request){
         $path = 'SiteSurvey/';
-        $fileName = $this->SaveFile($request->file_path,$path);
+        $fileName = $this->SaveFile($request->file('file_path'),$path);
+
 
         $SiteSurvey = SiteSurvey::create([
             'user_id' => auth()->user()->id,

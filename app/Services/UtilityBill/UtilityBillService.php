@@ -26,7 +26,7 @@ class UtilityBillService{
 
     public function upload_file($request){
         $path = 'UtilityBill/';
-        $fileName = $this->SaveFile($request->file_path,$path);
+        $fileName = $this->SaveFile($request->file('file_path'),$path);
 
         $UtilityBill = UtilityBill::create([
             'user_id' => auth()->user()->id,
