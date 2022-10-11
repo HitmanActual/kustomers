@@ -63,6 +63,7 @@ use ConsumesExternalService;
     public function getStatusForSunlight($project_id){
         try {
             $this->initial_api("crm");
+            return Response::successResponse($this->api_key,"Fetch Success");
             $finance_status = json_decode($this->performRequest('get', "v1/sunlight_customer/pull-status/".$project_id));
         }catch (\Exception $e){
             return Response::errorResponse($e->getMessage());
