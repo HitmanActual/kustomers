@@ -17,6 +17,13 @@ class AuthController extends Controller
 {
 
     public function reqister_user(Request $request){
+
+        $Customer = User::where("email" ,$request->email)->first();
+
+        if ($Customer){
+            return Response::successResponse("User Already Taken");
+        }
+
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required|numeric',
             'first_name'     => 'required',
