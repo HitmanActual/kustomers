@@ -21,7 +21,7 @@ class AuthController extends Controller
         $Customer = User::where("email" ,$request->email)->first();
 
         if ($Customer){
-            return Response::successResponse("User Already Taken");
+            return Response::successResponse(false);
         }
 
         $validator = Validator::make($request->all(), [
