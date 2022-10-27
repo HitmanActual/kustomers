@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\CustomerResetPassword;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,7 +53,8 @@ class User extends Authenticatable
     {
         $url = "https://kustomers.boxbyld.tech/api/callback_reset_password?token=".$token.'&email='.$this->email;
         $name = $this->first_name." ".$this->last_name;
-        Mail::to($this->email)->send(new CustomerResetPassword($url,$name));
+        $this->notify(new ResetPasswordNotification($url,$name));
+
     }
 
 }
