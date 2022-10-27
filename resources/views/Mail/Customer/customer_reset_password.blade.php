@@ -57,10 +57,12 @@
         <h3 class="head-name">Customer Boxbyld</h3>
         <div class="parent">
             <div class="content">
-                <h1 style="color: black">Hello</h1>
-                <h3>Forgot Password</h3>
+                <h1 style="color: black">Reset Password</h1>
+                <h2>Hello {{$name}}</h2>
+                <p>You Can Reset Password From Here</p>
                 <br>
                 <a href="{{$url}}" target="_blank">Click To Reset</a>
+                <br>
                 <h4>Thank you for using Customer BoxByld</h4>
             </div>
         </div>

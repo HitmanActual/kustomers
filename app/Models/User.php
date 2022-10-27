@@ -51,7 +51,8 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $url = "https://kustomers.boxbyld.tech/api/callback_reset_password?token=".$token.'&email='.$this->email;
-        Mail::to($this->email)->send(new CustomerResetPassword($url));
+        $name = $this->first_name." ".$this->last_name;
+        Mail::to($this->email)->send(new CustomerResetPassword($url,$name));
     }
 
 }
