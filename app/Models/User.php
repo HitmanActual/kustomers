@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Notifications\ResetPasswordNotification;
+use App\Mail\CustomerResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Passport\HasApiTokens;
 
 
@@ -50,7 +51,7 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $url = "https://kustomers.boxbyld.tech/api/callback_reset_password?token=".$token.'&email='.$this->email;
-        $this->notify(new ResetPasswordNotification($url));
+        Mail::to($this->email)->send(new CustomerResetPassword($url));
     }
 
 }
