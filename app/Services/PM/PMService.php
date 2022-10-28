@@ -26,7 +26,7 @@ class PMService{
 
         $data = [];
         foreach ($tickets->data as $ticket){
-            return Response::errorResponse($ticket->ticket->opportunity->user->name);
+            return Response::errorResponse($ticket->ticket);
 
 
             $ticket_id = $ticket->ticket->id;
