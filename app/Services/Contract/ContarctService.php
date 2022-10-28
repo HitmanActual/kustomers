@@ -27,7 +27,12 @@ class ContarctService{
         $data = [];
         foreach ($tickets->data as $ticket){
             $result['pm_user'] = $ticket->ticket->user;
-            $result['sales_user'] = $ticket->opportunity->user;
+            $SalesRapeData = [
+                "name" => $ticket->opportunity->user->name,
+                "email" => $ticket->opportunity->user->email,
+                "phone" => $ticket->opportunity->user->phone
+            ];
+            $result['sales_user'] = $SalesRapeData;
             $result['date'] = $ticket->contract->created_at;
             if($ticket->opportunity->is_finance == 1){
                 $result['financial'] = "Financed-".$ticket->opportunity->financial_institution;
