@@ -18,7 +18,7 @@ class SiteSurveyService{
             return Response::successResponse($SiteSurvey,"Site Survey Fetched All");
         }
 
-        $SiteSurvey = SiteSurvey::where('user_id',auth()->user()->id)->paginate(5);
+        $SiteSurvey = SiteSurvey::where('user_id',auth()->user()->id)->paginate(20);
         return Response::successResponse($SiteSurvey,"Site Survey Fetched Paginate");
 
     }

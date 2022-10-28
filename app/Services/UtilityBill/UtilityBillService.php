@@ -19,7 +19,7 @@ class UtilityBillService{
             return Response::successResponse($UtilityBill,"Utility Bill Fetched All");
         }
 
-        $UtilityBill = UtilityBill::where('user_id',auth()->user()->id)->paginate(5);
+        $UtilityBill = UtilityBill::where('user_id',auth()->user()->id)->paginate(20);
         return Response::successResponse($UtilityBill,"Utility Bill Fetched Paginate");
 
     }
