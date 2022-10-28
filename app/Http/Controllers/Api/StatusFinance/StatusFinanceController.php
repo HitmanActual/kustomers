@@ -18,6 +18,10 @@ class StatusFinanceController extends Controller
         return $this->service->getFinanced();
     }
 
+    public function getFinancedByTicketId($ticket_id){
+        return $this->service->getFinancedByTicketId($ticket_id);
+    }
+
     public function getStatusForSunlight($project_id){
         return $this->service->getStatusForSunlight($project_id);
     }

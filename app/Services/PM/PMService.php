@@ -59,6 +59,31 @@ class PMService{
 
     }
 
+    public function GetPMUserByTicketId($ticket_id){
+        try {
+            $ticket = json_decode($this->performRequest('get', "tickets/show-single-ticket/".$ticket_id));
+        }catch (\Exception $e){
+            return Response::errorResponse('Error Fetch Tickets');
+        }
+
+        $ticket = $ticket->data;
+
+        $PmUser = $ticket->ticket->user;
+        $SalesRapeData = [
+            "name" => $ticket->opportunity->user->name,
+            "email" => $ticket->opportunity->user->email,
+            "phone" => $ticket->opportunity->user->phone
+        ];
+
+        $data = [
+          "pm_user" => $PmUser,
+          "sales" => $SalesRapeData
+        ];
+
+        return Response::successResponse($data,"Pm Users Fetched");
+    }
+
+
     public function GetPMStatus(){
         $user_id = auth()->user()->lead_id;
         try {
@@ -82,6 +107,17 @@ class PMService{
         }
 
         return Response::successResponse($data,"Pm Status Fetched");
+
+    }
+
+    public function GetPMStatusByTicketID($ticket_Id){
+        try {
+            $PMStatus = json_decode($this->performRequest('get', "tickets/pm-statuses/get_api_status/".$ticket_Id));
+        }catch (\Exception $e){
+            return Response::errorResponse('Error Fetch Status From PM');
+        }
+
+        return Response::successResponse($PMStatus,"Pm Status Fetched");
 
     }
 }

@@ -48,16 +48,24 @@ Route::group(['middleware' => 'auth:api'],function (){
 
     Route::group(['prefix' => 'pm'],function (){
         Route::get('/pm_users',[\App\Http\Controllers\Api\PM\PMController::class,'getPMUserById']);
+        Route::get('/pm-user-by-ticket-id/{ticket_id}',[\App\Http\Controllers\Api\PM\PMController::class,'GetPMUserByTicketId']);
         Route::get('/pm_status',[\App\Http\Controllers\Api\PM\PMController::class,'getPMStatus']);
+        Route::get("/pm-status-by-ticket_id/{ticket_id}",[\App\Http\Controllers\Api\PM\PMController::class,'GetPMStatusByTicketID']);
     });
 
     Route::group(['prefix' => 'status_finance'],function (){
         Route::get('/get_financed',[\App\Http\Controllers\Api\StatusFinance\StatusFinanceController::class,'getFinanced']);
+        Route::get('/get-financed-by-ticket-id/{ticket_id}',[\App\Http\Controllers\Api\StatusFinance\StatusFinanceController::class,'getFinancedByTicketId']);
         Route::get('/get_status_sunlight/{project_id}',[\App\Http\Controllers\Api\StatusFinance\StatusFinanceController::class,'getStatusForSunlight']);
+    });
+
+    Route::group(['prefix' => 'tickets'],function (){
+        Route::get("/",[\App\Http\Controllers\Api\Ticket\TicketController::class,"index"]);
     });
 
 
     Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 });
+
 
 

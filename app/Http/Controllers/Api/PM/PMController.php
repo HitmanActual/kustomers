@@ -19,7 +19,16 @@ class PMController extends Controller
         return $this->service->GetPMUserById();
     }
 
+    public function GetPMUserByTicketId($ticket_id){
+        return $this->service->GetPMUserByTicketId($ticket_id);
+    }
+
     public function getPMStatus(){
         return $this->service->GetPMStatus();
+    }
+
+    public function GetPMStatusByTicketID($ticket_id)
+    {
+        return $this->service->GetPMStatusByTicketID($ticket_id);
     }
 }
