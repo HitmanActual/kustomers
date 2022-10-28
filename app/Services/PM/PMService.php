@@ -26,20 +26,19 @@ class PMService{
 
         $data = [];
         foreach ($tickets->data as $ticket){
-            return Response::errorResponse($ticket);
 
 
             $ticket_id = $ticket->ticket->id;
             $PmUser = $ticket->ticket->user;
             $SalesRap = $SalesRapeData = [
-                "name" => $ticket->ticket->opportunity->user->name,
-                "email" => $ticket->ticket->opportunity->user->email,
-                "phone" => $ticket->ticket->opportunity->user->phone
+                "name" => $ticket->opportunity->user->name,
+                "email" => $ticket->opportunity->user->email,
+                "phone" => $ticket->opportunity->user->phone
             ];
 
-            if ($ticket->ticket->opportunity->service_type_id == 1){
+            if ($ticket->opportunity->service_type_id == 1){
                 $Solution_type = "Solar";
-            }elseif ($ticket->ticket->opportunity->service_type_id == 2){
+            }elseif ($ticket->opportunity->service_type_id == 2){
                 $Solution_type = "Roofing";
             }else{
                 $Solution_type = "HVAC";
