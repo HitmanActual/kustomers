@@ -30,12 +30,12 @@ class PMService{
 
             $id = $ticket->ticket->user_id;
             try {
-                $PmUser = json_decode($this->performRequest('get', "user_by_id/".$id));
+                $PmUser = $ticket->ticket->user;
             }catch (\Exception $e){
                 return Response::errorResponse('Error Fetch User From PM');
             }
 
-            array_push($data,$PmUser->data);
+            array_push($data,$PmUser);
         }
 
         return Response::successResponse($data,"Pm Users Fetched");
