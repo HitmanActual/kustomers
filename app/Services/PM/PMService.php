@@ -28,14 +28,31 @@ class PMService{
         foreach ($tickets->data as $ticket){
 
 
-            $id = $ticket->ticket->user_id;
-            try {
-                $PmUser = $ticket->ticket->user;
-            }catch (\Exception $e){
-                return Response::errorResponse('Error Fetch User From PM');
+            $ticket_id = $ticket->ticket->id;
+            $PmUser = $ticket->ticket->user;
+            $SalesRap = $SalesRapeData = [
+                "name" => $ticket->ticket->opportunity->user->name,
+                "email" => $ticket->ticket->opportunity->user->email,
+                "phone" => $ticket->ticket->opportunity->user->phone
+            ];
+
+            if ($ticket->ticket->opportunity->service_type_id == 1){
+                $Solution_type = "Solar";
+            }elseif ($ticket->ticket->opportunity->service_type_id == 2){
+                $Solution_type = "Roofing";
+            }else{
+                $Solution_type = "HVAC";
             }
 
-            array_push($data,$PmUser);
+            $result = [
+                "ticket_id" => $ticket_id,
+                "solution_type" => $Solution_type,
+                "pm_user" => $PmUser,
+                "sales" => $SalesRapeData,
+            ];
+
+
+            array_push($data,$result);
         }
 
         return Response::successResponse($data,"Pm Users Fetched");
