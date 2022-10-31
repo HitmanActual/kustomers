@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:api'],function (){
 
     Route::group(['prefix' => 'tickets'],function (){
         Route::get("/",[\App\Http\Controllers\Api\Ticket\TicketController::class,"index"]);
+        Route::get("/get-ticket-by-id/{ticket_id}",[\App\Http\Controllers\Api\Ticket\TicketController::class,"getTicketById"]);
     });
 
 

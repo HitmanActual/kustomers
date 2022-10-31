@@ -18,4 +18,8 @@ class TicketController extends Controller
     public function index(){
         return $this->service->index();
     }
+
+    public function getTicketById($ticket_id){
+        return $this->service->getTicketById($ticket_id);
+    }
 }

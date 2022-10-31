@@ -55,4 +55,45 @@ class TicketService{
 
     }
 
+    public function getTicketById($ticket_id){
+        try {
+            $ticket = json_decode($this->performRequest('get', "tickets/show-single-ticket/".$ticket_id));
+        }catch (\Exception $e){
+            return Response::errorResponse($e->getMessage());
+        }
+
+        $ticket =  $ticket->data;
+
+        $data = [];
+
+        $data['utility_bill'] = [];
+        $data['contract'] = [];
+
+        foreach ($ticket->ticket->ticket_media as $media){
+            if($media->type == "utility_bill"){
+                array_push($data['utility_bill'],$media->url);
+            }elseif ($media->type == "contract"){
+                array_push($data['contract'],$media->url);
+            }else{
+                $data[$media->type] = $media->url;
+            }
+        }
+        $data['solution_pdf'] = $ticket->opportunity->pdf_path;
+
+
+        $data['plan'] = [];
+        try {
+            $plan = json_decode($this->performRequest('post', "client-plans/".$ticket_id));
+        }catch (\Exception $e){
+            return Response::successResponse($data,"Fetch Success");
+        }
+
+        foreach ($plan->data->media as $media){
+            array_push($data['plan'],$media->path);
+        }
+
+
+        return Response::successResponse($data,"Fetch Success");
+    }
+
 }
