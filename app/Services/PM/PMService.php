@@ -3,6 +3,7 @@
 namespace App\Services\PM;
 
 use App\Traits\ConsumesExternalService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class PMService{
@@ -67,6 +68,10 @@ class PMService{
         }
 
         $ticket = $ticket->data;
+
+        if ($ticket->ticket->lead_id != Auth::user()->lead_id){
+            return Response::errorResponse("You Can't Get This Ticket");
+        }
 
         $PmUser = $ticket->ticket->user;
         $SalesRapeData = [

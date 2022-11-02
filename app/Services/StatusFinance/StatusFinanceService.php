@@ -2,6 +2,7 @@
 namespace App\Services\StatusFinance;
 
 use App\Traits\ConsumesExternalService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class StatusFinanceService{
@@ -73,6 +74,10 @@ use ConsumesExternalService;
         }
 
         $ticket = $ticket->data;
+
+        if ($ticket->ticket->lead_id != Auth::user()->lead_id){
+            return Response::errorResponse("You Can't Get This Ticket");
+        }
 
         $result = [];
         $result['opportunity_id'] = $ticket->ticket->opportunity_id;
