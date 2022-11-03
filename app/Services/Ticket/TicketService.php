@@ -65,6 +65,25 @@ class TicketService{
             return Response::errorResponse("You Can't Get This Ticket");
         }
 
+
+        //PM Status
+
+        try {
+            $PMStatus = json_decode($this->performRequest('get', "tickets/pm-statuses/get_api_status/".$ticket_id));
+        }catch (\Exception $e){
+            return Response::errorResponse('Error Fetch Status From PM');
+        }
+
+
+        //get PM User And Sales User
+
+        $PmUser = $ticket->ticket->user;
+        $SalesRapeData = [
+            "name" => $ticket->opportunity->user->name,
+            "email" => $ticket->opportunity->user->email,
+            "phone" => $ticket->opportunity->user->phone
+        ];
+
         //get Finance Status in Single Ticket
 
         $result = [];
@@ -106,6 +125,9 @@ class TicketService{
 
 
         $data = [];
+        $data['pm_user'] = $PmUser;
+        $data['sales_user'] = $SalesRapeData;
+        $data['pm_status'] = $PMStatus->data;
         $data['finance'] = $result;
 
 
