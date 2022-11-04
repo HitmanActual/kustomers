@@ -61,7 +61,7 @@ class SiteSurveyService{
 
         $lead_id = auth()->user()->lead_id;
 
-        $fileContent = fopen($SiteSurvey->file,'r');
+        $fileContent = fopen("http://kustomers.boxbyld.tech/files/SiteSurvey/2022-11-011667335769.Untitled-1.jpg",'r');
 
         $media = [];
 
@@ -71,8 +71,8 @@ class SiteSurveyService{
         ];
 
         try {
-            $Response = json_decode($this->performRequestFile('post','leads/customer_upload/'.$lead_id.'/media/property',$media));
-
+            $Response = json_decode($this->performRequestFile('post','leads/customer_upload/884/media/property',$media));
+            return $Response;
         }catch (\Exception $e){
             return Response::errorResponse($e->getMessage());
         }
