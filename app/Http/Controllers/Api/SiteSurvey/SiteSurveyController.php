@@ -48,4 +48,8 @@ class SiteSurveyController extends Controller
 
 
     }
+
+    public function sendToCRM($id){
+        return $this->service->sendToCrm($id);
+    }
 }

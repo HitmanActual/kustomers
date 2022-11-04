@@ -46,4 +46,8 @@ class UtilityBillController extends Controller
 
         return $this->service->upload_file($request);
     }
+
+    public function sendToCRM($id){
+        return $this->service->sendToCrm($id);
+    }
 }

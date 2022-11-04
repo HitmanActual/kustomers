@@ -65,6 +65,8 @@ class TicketService{
             return Response::errorResponse("You Can't Get This Ticket");
         }
 
+        $data = [];
+
 
         //PM Status
 
@@ -73,6 +75,7 @@ class TicketService{
         }catch (\Exception $e){
             return Response::errorResponse('Error Fetch Status From PM');
         }
+        $data['pm_status'] = $PMStatus->data;
 
 
         //get PM User And Sales User
@@ -83,6 +86,8 @@ class TicketService{
             "email" => $ticket->opportunity->user->email,
             "phone" => $ticket->opportunity->user->phone
         ];
+        $data['pm_user'] = $PmUser;
+        $data['sales_user'] = $SalesRapeData;
 
         //get Finance Status in Single Ticket
 
@@ -121,13 +126,6 @@ class TicketService{
             ];
         }
 
-
-
-
-        $data = [];
-        $data['pm_user'] = $PmUser;
-        $data['sales_user'] = $SalesRapeData;
-        $data['pm_status'] = $PMStatus->data;
         $data['finance'] = $result;
 
 

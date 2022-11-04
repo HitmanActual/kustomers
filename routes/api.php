@@ -31,11 +31,13 @@ Route::group(['middleware' => 'auth:api'],function (){
     Route::group(['prefix' => 'site_survey'],function (){
         Route::get('/',[\App\Http\Controllers\Api\SiteSurvey\SiteSurveyController::class,'index']);
         Route::post('/upload_file',[\App\Http\Controllers\Api\SiteSurvey\SiteSurveyController::class,'upload_file']);
+        Route::get('/send/{id}',[\App\Http\Controllers\Api\SiteSurvey\SiteSurveyController::class,'sendToCRM']);
     });
 
     Route::group(['prefix' => 'utility_bill'],function (){
         Route::get('/',[\App\Http\Controllers\Api\UtilityBill\UtilityBillController::class,'index']);
         Route::post('/upload_file',[\App\Http\Controllers\Api\UtilityBill\UtilityBillController::class,'upload_file']);
+        Route::get('/send/{id}',[\App\Http\Controllers\Api\UtilityBill\UtilityBillController::class,'sendToCRM']);
     });
 
     Route::group(['prefix' => 'solution'],function (){
