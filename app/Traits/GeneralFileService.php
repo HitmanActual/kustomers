@@ -7,7 +7,8 @@ Trait GeneralFileService{
 
     public function SaveFile($image,$path){
         $file_extention = $image->getClientOriginalName();
-        $file_name = date('Y-m-d').time().'.'.$file_extention;
+        $extintion = explode(".",$file_extention);
+        $file_name = date('Y-m-d').time().'.'.$extintion[count($extintion)-1];
         Storage::disk('public')->put($path.'/'.$file_name,file_get_contents($image));
         return $file_name;
     }
