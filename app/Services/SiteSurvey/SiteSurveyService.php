@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use function MongoDB\BSON\toJSON;
 
 class SiteSurveyService{
@@ -19,12 +20,6 @@ class SiteSurveyService{
     public $baseUri;
     public $api_key;
 
-    public function __construct()
-    {
-        $env = "crm";
-        $this->baseUri = config("gateway_services.$env.base_uri");
-        $this->api_key = config("gateway_services.$env.api_key");
-    }
 
 
     public function index($request){
@@ -73,7 +68,11 @@ class SiteSurveyService{
             'mime_type' => $mimeType,
             'size' => $size,
             'filename' => $mediaFileName,
-            'type' => $type
+            'type' => $type,
+            'service' => $request->service,
+            'ticket_id' => $request->ticket_id,
+            'cost' => $request->cost,
+            'address' => $request->address,
         ]);
 
         return Response::successResponse($SiteSurvey,"File Is Uploaded");
@@ -102,17 +101,51 @@ class SiteSurveyService{
 
 
 
+        $this->initial_api('crm');
+
         try {
             $Response = json_decode($this->performRequest('post','leads/customer_upload/'.$lead_id.'/media/property',$media));
         }catch (\Exception $e){
             return Response::errorResponse($e->getMessage());
         }
 
+
+        $this->initial_api('pm');
+
+        $data = [];
+
+        $media_pm = new Str();
+        $media_pm->document_type = "site_survey";
+        $media_pm->url = $fileContent;
+
+
+        array_push($data,$media_pm);
+
+        $pm_data = [
+            "ticket_id" => $SiteSurvey->ticket_id,
+            "lead_id" => $lead_id,
+            "media" => $data
+        ];
+
+
+        try {
+            $Response = json_decode($this->performRequest('post','tickets/store-media',$pm_data));
+        }catch (\Exception $e){
+            return Response::errorResponse($e->getMessage());
+        }
+
+
         $SiteSurvey->update([
             'status' => "send"
         ]);
 
         return Response::successResponse($SiteSurvey,"File Is Send");
+    }
+
+    protected function initial_api($type){
+        $env           = $type;
+        $this->baseUri = config("gateway_services.$env.base_uri");
+        $this->api_key = config("gateway_services.$env.api_key");
     }
 
 }

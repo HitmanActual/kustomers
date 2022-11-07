@@ -22,6 +22,10 @@ class SiteSurvey extends Model
         'size',
         'filename',
         'type',
+        'service',
+        'ticket_id',
+        'cost',
+        'address',
         'status',
         'created_at'
     ];

@@ -38,6 +38,10 @@ class UtilityBillController extends Controller
     public function upload_file(Request $request){
         $validator = Validator::make($request->all(),[
             'file_path' => 'required|mimes:pdf,jpg,png,jpeg,docx|max:2048',
+            'ticket_id' => 'required|numeric',
+            'address' => 'required',
+            'service' => 'required',
+            'cost' => 'required|numeric'
         ]);
 
         if ($validator->fails()){
