@@ -18,15 +18,4 @@ trait ConsumesExternalService
         return $response->getBody()->getContents();
     }
 
-    public function performRequestFile($method, $requestUrl, $formParams = [], $headers = [])
-    {
-
-        $client = new Client([
-            'base_uri' => $this->baseUri,
-        ]);
-        $headers['token'] = $this->api_key;
-        $headers['Accept'] = 'application/json';
-        $response = $client->request($method, "api/" . $requestUrl, ['multipart' => $formParams, 'headers' => $headers]);
-        return $response->getBody()->getContents();
-    }
 }

@@ -17,6 +17,10 @@ class UtilityBill extends Model
         'id',
         'user_id',
         'file_path',
+        'mime_type',
+        'size',
+        'filename',
+        'type',
         'status',
         'created_at'
     ];

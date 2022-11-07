@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use function MongoDB\BSON\toJSON;
 
 class SiteSurveyService{
     use GeneralFileService;
@@ -40,14 +41,39 @@ class SiteSurveyService{
 
     public function upload_file($request){
 
-
         $path = 'SiteSurvey/';
         $fileName = $this->SaveFile($request->file('file_path'),$path);
 
+        $mediaFile = $request->file('file_path');
+        $mimeType = $mediaFile->getClientMimeType();
+        $size = $mediaFile->getSize(); //size in bytes
+
+        $mediaFileName = uniqid().'.'.$mediaFile->extension();
+        $mediaType = explode('/' , $mimeType)[0];
+
+        $type = '';
+
+        switch ($mediaType){
+            case 'image':
+                $type = 'image';
+                break;
+            case 'video':
+                $type = 'video';
+                break;
+            case 'application':
+                $type = 'pdf';
+                break;
+            default:
+                //
+        }
 
         $SiteSurvey = SiteSurvey::create([
             'user_id' => auth()->user()->id,
-            'file_path' => $fileName
+            'file_path' => $fileName,
+            'mime_type' => $mimeType,
+            'size' => $size,
+            'filename' => $mediaFileName,
+            'type' => $type
         ]);
 
         return Response::successResponse($SiteSurvey,"File Is Uploaded");
@@ -61,18 +87,23 @@ class SiteSurveyService{
 
         $lead_id = auth()->user()->lead_id;
 
-        $fileContent = fopen("http://kustomers.boxbyld.tech/files/SiteSurvey/2022-11-011667335769.Untitled-1.jpg",'r');
+        $fileContent = $SiteSurvey->file;
+
 
         $media = [];
 
-        $media [] = [
-            'name' => 'media[]',
-            'contents' => $fileContent
+        $media = [
+            'file' => $fileContent,
+            'mime_type' => $SiteSurvey->mime_type,
+            'size' => $SiteSurvey->size,
+            'filename' => $SiteSurvey->file_path,
+            'type' => $SiteSurvey->type,
         ];
 
+
+
         try {
-            $Response = json_decode($this->performRequestFile('post','leads/customer_upload/884/media/property',$media));
-            return $Response;
+            $Response = json_decode($this->performRequest('post','leads/customer_upload/'.$lead_id.'/media/property',$media));
         }catch (\Exception $e){
             return Response::errorResponse($e->getMessage());
         }

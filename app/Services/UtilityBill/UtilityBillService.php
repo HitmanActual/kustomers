@@ -18,7 +18,7 @@ class UtilityBillService{
 
     public function __construct()
     {
-        $env = "local";
+        $env = "crm";
         $this->baseUri = config("gateway_services.$env.base_uri");
         $this->api_key = config("gateway_services.$env.api_key");
     }
@@ -39,9 +39,36 @@ class UtilityBillService{
         $path = 'UtilityBill/';
         $fileName = $this->SaveFile($request->file('file_path'),$path);
 
+        $mediaFile = $request->file('file_path');
+        $mimeType = $mediaFile->getClientMimeType();
+        $size = $mediaFile->getSize(); //size in bytes
+
+        $mediaFileName = uniqid().'.'.$mediaFile->extension();
+        $mediaType = explode('/' , $mimeType)[0];
+
+        $type = '';
+
+        switch ($mediaType){
+            case 'image':
+                $type = 'image';
+                break;
+            case 'video':
+                $type = 'video';
+                break;
+            case 'application':
+                $type = 'pdf';
+                break;
+            default:
+                //
+        }
+
         $UtilityBill = UtilityBill::create([
             'user_id' => auth()->user()->id,
-            'file_path' => $fileName
+            'file_path' => $fileName,
+            'mime_type' => $mimeType,
+            'size' => $size,
+            'filename' => $mediaFileName,
+            'type' => $type
         ]);
 
         return Response::successResponse($UtilityBill,"File Is Uploaded");
@@ -55,22 +82,28 @@ class UtilityBillService{
 
         $lead_id = auth()->user()->lead_id;
 
-        $fileContent = fopen($UtilityBill->file,'r');
+        $fileContent = $UtilityBill->file;
+
 
         $media = [];
 
-        $media [] = [
-            'name' => 'media[]',
-            'contents' => $fileContent
+        $media = [
+            'file' => $fileContent,
+            'mime_type' => $UtilityBill->mime_type,
+            'size' => $UtilityBill->size,
+            'filename' => $UtilityBill->file_path,
+            'type' => $UtilityBill->type,
         ];
 
-        try {
-            $Response = json_decode($this->performRequestFile('post','leads/customer_upload/'.$lead_id.'/media/utility_bill',$media));
 
+
+        try {
+            $Response = json_decode($this->performRequest('post','leads/customer_upload/'.$lead_id.'/media/utility_bill',$media));
         }catch (\Exception $e){
             return Response::errorResponse($e->getMessage());
         }
 
+        //utility_bill
         $UtilityBill->update([
             'status' => "send"
         ]);
