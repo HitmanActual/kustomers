@@ -70,5 +70,9 @@ Route::group(['middleware' => 'auth:api'],function (){
     Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout']);
 });
 
+Route::group(['prefix' => 'customer-message','middleware' => 'api_key'],function (){
+    Route::get('get-user/{id}',[App\Http\Controllers\Api\CustomersController\CustomerController::class,'getUserById']);
+    Route::get('get-users',[App\Http\Controllers\Api\CustomersController\CustomerController::class,'getAllUsers']);
+});
 
 

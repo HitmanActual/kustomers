@@ -74,10 +74,23 @@ class PMService{
         }
 
         $PmUser = $ticket->ticket->user;
+        if ($PmUser != null){
+            $PmUser->role = [
+                "id" => 4,
+                "title" => "project_manager"
+            ];
+            $PmUser->site = "pm";
+        }
         $SalesRapeData = [
+            "id" => $ticket->opportunity->user->id,
             "name" => $ticket->opportunity->user->name,
             "email" => $ticket->opportunity->user->email,
-            "phone" => $ticket->opportunity->user->phone
+            "phone" => $ticket->opportunity->user->phone,
+            "role" => [
+                "id" => 1,
+                "title" => "Sales Rep"
+            ],
+            "site" => 'crm'
         ];
 
         $data = [
