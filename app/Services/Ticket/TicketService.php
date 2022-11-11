@@ -145,12 +145,15 @@ class TicketService{
         //get Docs in Single Ticket
         $data['utility_bill'] = [];
         $data['contract'] = [];
+        $data['site_survey'] = [];
 
         foreach ($ticket->ticket->ticket_media as $media){
             if($media->type == "utility_bill"){
                 array_push($data['utility_bill'],$media->url);
             }elseif ($media->type == "contract"){
                 array_push($data['contract'],$media->url);
+            }elseif ($media->type == "site_survey") {
+                $data[$media->type] = $media->url;
             }else{
                 $data[$media->type] = $media->url;
             }
