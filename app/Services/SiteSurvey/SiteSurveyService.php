@@ -84,6 +84,10 @@ class SiteSurveyService{
             return Response::errorResponse("You Don't Have SiteSurvey");
         }
 
+        if ($SiteSurvey->status == "send"){
+            return Response::errorResponse("This File Is Send Before");
+        }
+
         $lead_id = auth()->user()->lead_id;
 
         $fileContent = $SiteSurvey->file;

@@ -79,6 +79,10 @@ class UtilityBillService{
             return Response::errorResponse("You Don't Have Utility Bill");
         }
 
+        if ($UtilityBill->status == "send"){
+            return Response::errorResponse("This File Is Send Before");
+        }
+
         $lead_id = auth()->user()->lead_id;
 
         $fileContent = $UtilityBill->file;
