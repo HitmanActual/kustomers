@@ -153,7 +153,7 @@ class TicketService{
             }elseif ($media->type == "contract"){
                 array_push($data['contract'],$media->url);
             }elseif ($media->type == "site_survey") {
-                $data[$media->type] = $media->url;
+                array_push($data['site_survey'],$media->url);
             }else{
                 $data[$media->type] = $media->url;
             }
