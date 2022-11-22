@@ -120,7 +120,7 @@ class UtilityBillService{
 
         $pm_data = [
             "ticket_id" => $UtilityBill->ticket_id,
-            "lead_id" => 968,
+            "lead_id" => $lead_id,
             "media" => $data
         ];
 
