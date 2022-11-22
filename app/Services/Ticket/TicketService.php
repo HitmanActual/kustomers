@@ -150,14 +150,13 @@ class TicketService{
         foreach ($ticket->ticket->ticket_media as $media){
             if($media->type == "utility_bill"){
                 array_push($data['utility_bill'],$media->url);
-            }elseif ($media->type == "contract"){
-                array_push($data['contract'],$media->url);
             }elseif ($media->type == "site_survey") {
                 array_push($data['site_survey'],$media->url);
             }else{
                 $data[$media->type] = $media->url;
             }
         }
+        array_push($data['contract'],$ticket->contract->contract_url);
         $data['solution_pdf'] = $ticket->opportunity->pdf_path;
 
 
