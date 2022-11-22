@@ -101,11 +101,11 @@ class UtilityBillService{
         //Send To CRM
         $this->initial_api('crm');
 
-        try {
-            $Response = json_decode($this->performRequest('post','leads/customer_upload/'.$lead_id.'/media/utility_bill',$media));
-        }catch (\Exception $e){
-            return Response::errorResponse($e->getMessage());
-        }
+//        try {
+//            $Response = json_decode($this->performRequest('post','leads/customer_upload/'.$lead_id.'/media/utility_bill',$media));
+//        }catch (\Exception $e){
+//            return Response::errorResponse($e->getMessage());
+//        }
 
         //Send To Pm
         $this->initial_api('pm');
@@ -123,6 +123,8 @@ class UtilityBillService{
             "lead_id" => $lead_id,
             "media" => $data
         ];
+
+        return $pm_data;
 
         try {
             $Response = json_decode($this->performRequest('post','tickets/store-media',$pm_data));
