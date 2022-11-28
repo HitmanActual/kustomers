@@ -32,13 +32,13 @@ use ConsumesExternalService;
                 $result['financial'] = "Financed-".$ticket->opportunity->financial_institution;
                 if($ticket->opportunity->financial_institution == "sunlight"){
 
-                    try {
-                        $this->initial_api("crm");
-                        $project_ids = json_decode($this->performRequest('get', "v1/sunlight_customer/get-submitted/project_ids/".$result['lead_id']));
-                    }catch (\Exception $e){
-                        return Response::errorResponse($e->getMessage());
-                    }
-                    $result['project_ids'] = $project_ids->data;
+//                    try {
+//                        $this->initial_api("crm");
+//                        $project_ids = json_decode($this->performRequest('get', "v1/sunlight_customer/get-submitted/project_ids/".$result['lead_id']));
+//                    }catch (\Exception $e){
+//                        return Response::errorResponse($e->getMessage());
+//                    }
+//                    $result['project_ids'] = $project_ids->data;
 
                 }elseif ($ticket->opportunity->financial_institution == "goodleap"){
 
@@ -88,13 +88,13 @@ use ConsumesExternalService;
             $result['financial'] = "Financed-".$ticket->opportunity->financial_institution;
             if($ticket->opportunity->financial_institution == "sunlight"){
 
-                try {
-                    $this->initial_api("crm");
-                    $project_ids = json_decode($this->performRequest('get', "v1/sunlight_customer/get-submitted/project_ids/".$result['lead_id']));
-                }catch (\Exception $e){
-                    return Response::errorResponse($e->getMessage());
-                }
-                $result['project_ids'] = $project_ids->data;
+//                try {
+//                    $this->initial_api("crm");
+//                    $project_ids = json_decode($this->performRequest('get', "v1/sunlight_customer/get-submitted/project_ids/".$result['lead_id']));
+//                }catch (\Exception $e){
+//                    return Response::errorResponse($e->getMessage());
+//                }
+//                $result['project_ids'] = $project_ids->data;
 
             }elseif ($ticket->opportunity->financial_institution == "goodleap"){
 
@@ -119,14 +119,15 @@ use ConsumesExternalService;
     }
 
     public function getStatusForSunlight($project_id){
-        try {
-            $this->initial_api("crm");
-            $finance_status = json_decode($this->performRequest('get', "v1/sunlight_customer/pull-status/".$project_id));
-        }catch (\Exception $e){
-            return Response::errorResponse($e->getMessage());
-        }
-
-        return Response::successResponse($finance_status,"Fetch Success");
+//        try {
+//            $this->initial_api("crm");
+//            $finance_status = json_decode($this->performRequest('get', "v1/sunlight_customer/pull-status/".$project_id));
+//        }catch (\Exception $e){
+//            return Response::errorResponse($e->getMessage());
+//        }
+//
+//        return Response::successResponse($finance_status,"Fetch Success");
+        return Response::successResponse([],"No Result For Sunlight");
     }
 
 
