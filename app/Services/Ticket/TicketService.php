@@ -70,12 +70,24 @@ class TicketService{
 
         //PM Status
 
+//        try {
+//            $PMStatus = json_decode($this->performRequest('get', "tickets/pm-statuses/get_api_status/".$ticket_id));
+//        }catch (\Exception $e){
+//            return Response::errorResponse('Error Fetch Status From PM');
+//        }
+//        $data['pm_status'] = $PMStatus->data;
+
+        //PM Timeline
+
+
         try {
-            $PMStatus = json_decode($this->performRequest('get', "tickets/pm-statuses/get_api_status/".$ticket_id));
+            $PMTimeLine = json_decode($this->performRequest('get', "timeline/".$ticket_id));
+            $data['pm_timeline'] = $PMTimeLine->data;
         }catch (\Exception $e){
-            return Response::errorResponse('Error Fetch Status From PM');
+//            return Response::errorResponse('Error Fetch Status From PM');
+            $data['pm_timeline'] = "No PM TimeLine";
         }
-        $data['pm_status'] = $PMStatus->data;
+
 
 
         //get PM User And Sales User
