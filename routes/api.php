@@ -75,4 +75,8 @@ Route::group(['prefix' => 'customer-message','middleware' => 'api_key'],function
     Route::get('get-users',[App\Http\Controllers\Api\CustomersController\CustomerController::class,'getAllUsers']);
 });
 
-
+Route::group([
+    'prefix' => 'timeline'
+], function () {
+    Route::get('/', [\App\Http\Controllers\Api\TimelineController::class, 'show']);
+});
