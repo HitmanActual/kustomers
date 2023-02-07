@@ -31,7 +31,7 @@ class PMService{
 
             $ticket_id = $ticket->ticket->id;
             $PmUser = $ticket->ticket->user;
-            $SalesRap = $SalesRapeData = [
+            $SalesRapeData = [
                 "name" => $ticket->opportunity->user->name,
                 "email" => $ticket->opportunity->user->email,
                 "phone" => $ticket->opportunity->user->phone
