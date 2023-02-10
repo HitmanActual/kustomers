@@ -142,6 +142,16 @@ class TicketService{
                 }
 
                 $result['finance_status'] = $finance_status;
+            }elseif ($ticket->opportunity->financial_institution == "concert") {
+                try {
+                    $this->initial_api("crm");
+                    $finance_status = json_decode($this->performRequest('get', "v1/concert/get-webhook-status?lead_id=".$result['lead_id']."&solution_id=".$result['opportunity_id']));
+                }catch (\Exception $e){
+                    return Response::errorResponse($e->getMessage());
+                }
+
+                $result['finance_status'] = $finance_status;
+
             }
         }else{
             $result['financial_name'] = "Cache";
